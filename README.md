@@ -1,6 +1,6 @@
 # pymaf
 
-The Python version of the MAF algorithm, which takes a set of concurrent time series and extracts the linear combinations that maximize the autocorrelation of the time series. The first MAF time series maximizes the autocorrelation without any other constraints, while each subsequent MAF has the additional contraint that it is orthogonal to the previous MAF time series. Orthogonal means that the vector dot product is zero. 
+The Python version of the MAF algorithm, which takes a set of concurrent time series and extracts the linear combinations that maximize the autocorrelation of the time series. The first MAF time series maximizes the autocorrelation without any other constraints, while each subsequent MAF has the additional contraint that it is orthogonal to the previous MAF time series. Two time series are orthogonal if the vector dot product is zero. 
 
 ## Install
 
