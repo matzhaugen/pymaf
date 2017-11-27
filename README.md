@@ -5,7 +5,7 @@ The Python version of the MAF algorithm, which takes a set of concurrent time se
 ## Install
 
 To install
-Open the terminal, go to the pymaf directory, and type
+Open the terminal, go to the top pymaf directory, and type
 ```
 pip install -e .
 ```
