@@ -1,5 +1,5 @@
 from numpy.linalg import svd
-from numpy import diff, cov, dot, diag, power, sqrt, sum, fliplr, array
+from numpy import diff, cov, dot, diag, power, sqrt, sum, fliplr, array, asarray
 
 def maf(x):
 	"""Compute the maf factors of a set of time series
@@ -12,7 +12,7 @@ def maf(x):
 		w (p-by-p np.array) - maf weights, or the loadings of each original time series. 
 		Each column represents a maf factor. 
 	"""
-	x = np.asarray(x)
+	x = asarray(x)
 	n, p = x.shape
 	if n - 1 < p:
 	    raise ValueError("Not enough observations to estimate weights")

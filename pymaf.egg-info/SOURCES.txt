@@ -1,3 +1,5 @@
+setup.cfg
+setup.py
 pymaf/__init__.py
 pymaf.egg-info/PKG-INFO
 pymaf.egg-info/SOURCES.txt
