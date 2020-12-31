@@ -39,7 +39,7 @@ jobs:
         run: |
           poetry build
       - name: Release to PyPI
-        if: github.ref == 'ref/head/master'
+        if: github.ref == 'refs/heads/master'
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
