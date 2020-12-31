@@ -21,13 +21,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install Poetry
-        run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
       - name: Install dependencies
-        env:
-          PATH: $HOME/.poetry/bin
         run: |
+          pip install poetry
           poetry install
       - name: Check code style
         run: |
