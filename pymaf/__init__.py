@@ -1,1 +1,1 @@
-from .maf import maf
+from .maf import maf, windowed_maf
