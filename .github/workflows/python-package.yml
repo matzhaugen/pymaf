@@ -29,9 +29,18 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-      - name: Run black
+      - name: Check code style
         run: |
           poetry run pre-commit run --all-files
       - name: Test with pytest
         run: |
           poetry run pytest -s
+      - name: Build package
+        run: |
+          poetry build
+      - name: Release to PyPI
+        if: github.ref == 'ref/head/master'
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: twine upload --verbose dist/* || echo 'Version exists'
