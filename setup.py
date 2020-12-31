@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="pymaf",
-    version="0.2",
+    version="0.3",
     description="Finding Maximum autocorrelation factors",
     url="http://github.com/mahaugen/pymaf",
     author="Matz Haugen",
