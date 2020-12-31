@@ -1,8 +1,0 @@
-setup.cfg
-setup.py
-pymaf/__init__.py
-pymaf.egg-info/PKG-INFO
-pymaf.egg-info/SOURCES.txt
-pymaf.egg-info/dependency_links.txt
-pymaf.egg-info/not-zip-safe
-pymaf.egg-info/top_level.txt
