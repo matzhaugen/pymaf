@@ -8,10 +8,10 @@ def maf(x):
 
     Input: x(np.array/pd.dataframe) dimensions n-by-p with p n-length time series
     Output: f(np.array) Maf factors, i.e. the rotated time series such that the first column
-    is the linear combination of the original time series that maximizes autocorrelation. The 
+    is the linear combination of the original time series that maximizes autocorrelation. The
     second column maximizes autocorrelation and is also orthogonal to the first time series.
-        w (p-by-p np.array) - maf weights, or the loadings of each original time series. 
-        Each column represents a maf factor. 
+        w (p-by-p np.array) - maf weights, or the loadings of each original time series.
+        Each column represents a maf factor.
     """
     x = asarray(x)
     n, p = x.shape
