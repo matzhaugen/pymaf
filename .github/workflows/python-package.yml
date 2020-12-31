@@ -14,7 +14,6 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [3.7, 3.8]
-        poetry-version: [1.1.4]
         os: [ubuntu-18.04, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -22,10 +21,9 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Inst
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install Poetry
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
       - name: Install dependencies
         run: |
           poetry install
