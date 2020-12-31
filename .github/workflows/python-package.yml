@@ -25,9 +25,9 @@ jobs:
         run: |
           curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
       - name: Install dependencies
+        env:
+          PATH: $HOME/.poetry/bin
         run: |
-          export PATH=$PATH:$HOME/.poetry/bin
-          source $HOME/.poetry/env
           poetry install
       - name: Check code style
         run: |
