@@ -30,13 +30,24 @@ def maf(x):
     uy, dy, vy = svd(sy)
     w = np.fliplr(np.dot(a, uy))
     w = np.array([wi / np.sqrt(sum(wi ** 2)) for wi in w.T]).T
+
+    f = np.dot(x, w)
+
+    # We disambiguate the mafs by correlating the maf factors with a linear function
+    # with time, i.e. 1:t where t is the number of time steps.
+    flip = np.sum(np.diff(f, axis=0), axis=0) > 0
+    flip = flip.astype(int) * 2 - 1
+    w = w * flip[np.newaxis, :]
     f = np.dot(x, w)
 
     return f, w
 
 
 def windowed_maf(x: np.ndarray, min_observations: int, steps: int):
-    """Compute the maf over a moving time window
+    """(Experimental feature): Compute the maf over a moving time window. If the number of
+    observations are not large enough, the weights will be unstable and misaligned with other time windows
+    leading to inconsistent mafs. In this case, it is wise to verify that the coefficients produce reasonable results
+    e.g. by correlating the resultant mafs with time or some other measure of consistency.
 
     Args:
         x (np.ndarray): Input data, with each column being a time series, each row is a multivariate timeseries observation.
@@ -54,24 +65,15 @@ def windowed_maf(x: np.ndarray, min_observations: int, steps: int):
     x = np.asarray(x)
 
     n, p = x.shape
-    assert (
-        min_observations >= p + 1
-    ), "The minimum observations must be greater than the number of time series"
+    assert min_observations >= p + 1, "The minimum observations must be greater than the number of time series"
     weights = []
     start_idx = np.arange(0, n - min_observations + 1, steps)
     end_idx = np.arange(min_observations, n + 1, steps)
-    print(start_idx, end_idx)
 
     weights = np.zeros((len(start_idx), p, p))
     for i, (start, end) in enumerate(zip(start_idx, end_idx)):
         chunk = x[start:end, :]
-        maf_output = maf(chunk)
-        flip = (
-            np.sum(maf_output[0][:, :] * np.arange(len(chunk))[:, np.newaxis], axis=0)
-            > 0
-        )
-        flip = flip.astype(int) * 2 - 1
-        weights[i, :, :] = maf_output[1] * flip[np.newaxis, :]
+        f, weights[i, :, :] = maf(chunk)
 
     windowed_weights = np.zeros((n, p, p))
     last_end = 0
@@ -79,9 +81,8 @@ def windowed_maf(x: np.ndarray, min_observations: int, steps: int):
         windowed_weights[last_end:end, :, :] = weights[i, :, :]
         last_end = end
     if end < n:
-        windowed_weights[end:, :, :] = windowed_weights[end, :, :]
+        windowed_weights[end:, :, :] = windowed_weights[(end - 1), :, :]
 
     windowed_mafs = windowed_weights * x[:, :, np.newaxis]
-    windowed_mafs = scale(np.sum(windowed_mafs, axis=1))
 
     return windowed_mafs, windowed_weights
