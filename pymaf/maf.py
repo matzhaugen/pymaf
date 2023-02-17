@@ -29,7 +29,7 @@ def maf(x):
     sy = np.cov(dy.T)
     uy, dy, vy = svd(sy)
     w = np.fliplr(np.dot(a, uy))
-    w = np.array([wi / np.sqrt(sum(wi ** 2)) for wi in w.T]).T
+    w = np.array([wi / np.sqrt(sum(wi**2)) for wi in w.T]).T
 
     f = np.dot(x, w)
 
