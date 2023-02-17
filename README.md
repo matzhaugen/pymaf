@@ -42,3 +42,11 @@ for y_arr, label in zip(first_mafs.T, labels):
 plt.legend()
 plt.show()
 ```
+
+## Developing
+
+To add package do
+```
+poetry add [package]
+poetry lock
+```
